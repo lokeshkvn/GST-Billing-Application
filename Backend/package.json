@@ -9,7 +9,8 @@
   "author": "Lokesh Nandanwar",
   "license": "ISC",
   "dependencies": {
-    "hapi": "^17.2.1",
+    "hapi": "^16.1.0",
+    "joi": "^13.1.2",
     "mysql": "^2.15.0"
   }
 }
