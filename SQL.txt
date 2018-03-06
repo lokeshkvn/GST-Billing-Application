@@ -1,0 +1,13 @@
+DATABASE CREATION QUERY:
+
+CREATE TABLE `products` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `product_code` int(11) NOT NULL,
+ `product_name` varchar(1000) NOT NULL,
+ `product_price` int(11) NOT NULL,
+ `product_gst` int(11) NOT NULL,
+ PRIMARY KEY (`id`)
+) 
+
+
+
