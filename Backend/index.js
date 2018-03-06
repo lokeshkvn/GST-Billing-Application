@@ -2,6 +2,7 @@ const Hapi = require('hapi');
 const mysql = require('mysql');
 const Joi = require('joi');
 
+//create a server
 const server = new Hapi.Server()
 server.connection({
     host: "localhost",
@@ -11,6 +12,7 @@ server.connection({
     }
 });
 
+//start server
 server.start((err) => {
     if (err) {
         throw err;
@@ -18,6 +20,7 @@ server.start((err) => {
     console.log(`Server running at: ${server.info.uri}`);
 });
 
+//create connection to database
 var db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -25,6 +28,7 @@ var db = mysql.createConnection({
     database: "gst_billing_app"
 });
 
+//connect to database
 db.connect((error) => {
     if (error) {
         console.log("Error connecting to mysql database");
@@ -32,11 +36,14 @@ db.connect((error) => {
     }
     console.log("Connected to mysql.");
 });
+
+//Check for valid connection details
 db.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
     if (error) throw error;
     console.log('The solution is: ', results[0].solution);
 });
 
+//creating route for testing
 server.route({
     method: "GET",
     path: "/welcome",
@@ -45,6 +52,7 @@ server.route({
     }
 });
 
+//creating GET route for the query of product using product_code
 server.route({
     method: "GET",
     path: "/code/{product_code}",
@@ -61,6 +69,7 @@ server.route({
             h(product_c);
         });
     },
+    //validations for params
     config: {
         validate: {
             params: {
@@ -69,6 +78,8 @@ server.route({
         }
     }
 });
+
+//creating GET route for the query of product using product_name
 server.route({
     method: "GET",
     path: "/name/{product_name}",
@@ -84,6 +95,7 @@ server.route({
             var product_n = JSON.stringify(result)
             h(product_n);
         });
+        //validations for params
         config: {
             validate: {
                 params: {
@@ -94,6 +106,7 @@ server.route({
     }
 });
 
+//creating GET route for the query all products
 server.route({
     method: "GET",
     path: "/products",
@@ -111,6 +124,8 @@ server.route({
         });
     }
 });
+
+//creating POST route to add product in database
 server.route({
     method: "POST",
     path: "/product",
@@ -129,6 +144,7 @@ server.route({
             h(result);
         });
     },
+    //validations for payload
     config: {
         validate: {
             payload: {
@@ -141,6 +157,7 @@ server.route({
     }
 });
 
+//creating POST route to update existing product in database
 server.route({
     method: "POST",
     path: "/{product_code}",
@@ -159,6 +176,7 @@ server.route({
             h(result);
         });
     },
+    //validations for params
     config: {
         validate: {
             payload: {
