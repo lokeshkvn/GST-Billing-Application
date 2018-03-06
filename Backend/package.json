@@ -1,0 +1,15 @@
+{
+  "name": "gst_billing_app",
+  "version": "1.0.0",
+  "description": "assignment of placementseason for summer intern",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lokesh Nandanwar",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^17.2.1",
+    "mysql": "^2.15.0"
+  }
+}
