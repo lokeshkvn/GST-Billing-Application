@@ -87,7 +87,7 @@ server.route({
         config: {
             validate: {
                 params: {
-                    product_code: Joi.string()
+                    product_name: Joi.string()
                 }
             }
         }
@@ -119,7 +119,7 @@ server.route({
         const product_name = request.payload.product_name;
         const product_price = request.payload.product_price;
         const product_gst = request.payload.product_gst;
-        var statement = "INSERT INTO `products` (`id`, `product_code`, `product_name`, `product_price`, `product_gst`) VALUES (NULL, '"+ product_code +"', '"+product_name +"', '"+ product_price +"', '"+ product_gst +"')";
+        var statement = "INSERT INTO `products` (`id`, `product_code`, `product_name`, `product_price`, `product_gst`) VALUES (NULL, '" + product_code + "', '" + product_name + "', '" + product_price + "', '" + product_gst + "')";
         db.query(statement, function (error, result, fields) {
             if (error) {
                 console.log("Error while querying");
@@ -128,6 +128,16 @@ server.route({
             console.log("Result from query function", result);
             h(result);
         });
+    },
+    config: {
+        validate: {
+            payload: {
+                product_name: Joi.string(),
+                product_code: Joi.number().integer(),
+                product_price: Joi.number().integer(),
+                product_gst: Joi.number().integer()
+            }
+        }
     }
 });
 
@@ -139,7 +149,7 @@ server.route({
         const product_name = request.payload.product_name;
         const product_price = request.payload.product_price;
         const product_gst = request.payload.product_gst;
-        var statement = "UPDATE `products` SET `product_name` = '"+ product_name +"', `product_price` = '" + product_price + "', `product_gst` = '" + product_gst + "' WHERE `products`.`product_code` = '"+ product_code +"'";
+        var statement = "UPDATE `products` SET `product_name` = '" + product_name + "', `product_price` = '" + product_price + "', `product_gst` = '" + product_gst + "' WHERE `products`.`product_code` = '" + product_code + "'";
         db.query(statement, function (error, result, fields) {
             if (error) {
                 console.log("Error while querying");
@@ -148,5 +158,14 @@ server.route({
             console.log("Result from query function", result);
             h(result);
         });
+    },
+    config: {
+        validate: {
+            payload: {
+                product_name: Joi.string(),
+                product_price: Joi.number().integer(),
+                product_gst: Joi.number().integer()
+            }
+        }
     }
 });
