@@ -1,9 +1,35 @@
 <p>
-  product-list works!
+
 </p>
-<ul>
-<li *ngFor="let product of productsList">
-  {{product.product_name}}
-</li>
-</ul>
-  
+
+<p-table [value]="productsList" [paginator]="true" [rows]="10" pageLinkSize="3">
+  <ng-template pTemplate="caption">
+    <div style="padding:20px">List of Products
+        <button style="float:right;margin-left: auto;margin-right: auto;" (click)="addNewProduct()" label="Add Product" type="button" pButton icon="fa-plus"></button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th id='header'>Product Code</th>
+      <th id='header'>Product Name</th>
+      <th id='header'>Product Price</th>
+      <th id='header'>Product GST(%)</th>
+      <th id='header'>Edit</th>
+      <th id='header'>Delete</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-product>
+    <tr>
+      <td id='product'>{{product.product_code}}</td>
+      <td id='product'>{{product.product_name}}</td>
+      <td id='product'>{{product.product_price}}</td>
+      <td id='product'>{{product.product_gst}}</td>
+      <td id='product'><button type="button" pButton icon="fa-edit" iconPos="left" style="float:center" (click)="selectedProduct(product)" ></button></td>
+      <td id='product'><button type="button" pButton icon="fa-trash" iconPos="left" style="float:center" class="ui-button-danger"></button></td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<div *ngIf="product">
+  <app-product-detail [product]="product" (addProductNotify)="addProduct($event)"></app-product-detail>
+</div>
