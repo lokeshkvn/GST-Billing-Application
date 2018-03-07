@@ -176,7 +176,7 @@ server.route({
             h(result);
         });
     },
-    //validations for params
+    //validations for payload
     config: {
         validate: {
             payload: {
