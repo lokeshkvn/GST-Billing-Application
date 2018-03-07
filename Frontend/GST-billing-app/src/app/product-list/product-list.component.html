@@ -1,11 +1,8 @@
-<p>
-
-</p>
 
 <p-table [value]="productsList" [paginator]="true" [rows]="10" pageLinkSize="3">
   <ng-template pTemplate="caption">
     <div style="padding:20px">List of Products
-        <button style="float:right;margin-left: auto;margin-right: auto;" (click)="addNewProduct()" label="Add Product" type="button" pButton icon="fa-plus"></button>
+        <button style="float:right;margin-left: auto;margin-right: auto;" (click)="addNewProduct();;display=true" label="Add Product" type="button" pButton icon="fa-plus"></button>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
@@ -15,7 +12,6 @@
       <th id='header'>Product Price</th>
       <th id='header'>Product GST(%)</th>
       <th id='header'>Edit</th>
-      <th id='header'>Delete</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product>
@@ -24,12 +20,54 @@
       <td id='product'>{{product.product_name}}</td>
       <td id='product'>{{product.product_price}}</td>
       <td id='product'>{{product.product_gst}}</td>
-      <td id='product'><button type="button" pButton icon="fa-edit" iconPos="left" style="float:center" (click)="selectedProduct(product)" ></button></td>
-      <td id='product'><button type="button" pButton icon="fa-trash" iconPos="left" style="float:center" class="ui-button-danger"></button></td>
+      <td id='product'><button type="button" pButton icon="fa-edit" iconPos="left" style="float:center" (click)="selectedProduct(product);display=true" ></button></td>
     </tr>
   </ng-template>
 </p-table>
 
-<div *ngIf="product">
-  <app-product-detail [product]="product" (addProductNotify)="addProduct($event)"></app-product-detail>
+<div *ngIf="product" >
+    <p-dialog header="Product Detail" [(visible)]="display" modal="modal" width="350" [responsive]="true">
+        <form>
+          <div class="form-group" style="padding-bottom:20px;padding-top:20px">
+            <div class="ui-inputgroup">
+                <span class="ui-float-label">
+                    <input id="product-code" type="number"  pInputText [(ngModel)]="product.product_code" name="code"> 
+                    <label for="product-code">Product Code</label>
+                </span>
+                <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+            </div>
+          </div>
+          <div class="form-group" style="padding-bottom:20px;padding-top:20px">
+              <div class="ui-inputgroup">
+                  <span class="ui-float-label">
+                      <input id="product-name" type="text" size="30" pInputText [(ngModel)]="product.product_name" name="name"> 
+                      <label for="product-name">Product Name</label>
+                  </span>
+                  <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+              </div>
+            </div>
+            <div class="form-group" style="padding-bottom:20px;padding-top:20px">
+                <div class="ui-inputgroup">
+                    <span class="ui-float-label">
+                        <input id="product-price" type="number"  pInputText [(ngModel)]="product.product_price" name="price"> 
+                        <label for="product-price">Product Price</label>
+                    </span>
+                    <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+                </div>
+              </div>
+              <div class="form-group" style="padding-bottom:20px;padding-top:20px">
+                  <div class="ui-inputgroup">
+                      <span class="ui-float-label">
+                          <input id="product-gst" type="number"  pInputText [(ngModel)]="product.product_gst" name="gst"> 
+                          <label for="product-gst">Product GST</label>
+                      </span>
+                      <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+                  </div>
+                </div>
+        </form>
+            <p-footer>
+                <button type="button" pButton icon="fa-check" (click)="editProduct()" label="Save" class="ui-button-success"></button>
+                <button type="button" pButton icon="fa-close" (click)="display=false" label="Cancel" class="ui-button-danger"></button>
+            </p-footer>
+    </p-dialog>    
 </div>
