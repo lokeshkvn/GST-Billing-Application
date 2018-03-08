@@ -12,6 +12,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import {InputTextModule} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms'
+import {TabViewModule} from 'primeng/tabview';
+import {DataScrollerModule} from 'primeng/datascroller';
+import {CheckboxModule} from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import {FormsModule} from '@angular/forms'
     DialogModule,
     InputTextModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TabViewModule,
+    DataScrollerModule,
+    CheckboxModule
   ],
   providers: [GstService],
   bootstrap: [AppComponent]

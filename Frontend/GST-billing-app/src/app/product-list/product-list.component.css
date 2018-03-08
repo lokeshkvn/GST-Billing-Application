@@ -11,3 +11,12 @@
     padding: 10px;
     text-align:center
 }
+
+.ui-tabview-panel{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.ui-datatable-data-empty .ui-dt-c {
+    width: 100% !important;
+  }    
