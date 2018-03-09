@@ -151,7 +151,7 @@ server.route({
                 product_name: Joi.string(),
                 product_code: Joi.number().integer(),
                 product_price: Joi.number().integer(),
-                product_gst: Joi.number().integer()
+                product_gst: Joi.number()
             }
         }
     }
@@ -182,7 +182,7 @@ server.route({
             payload: {
                 product_name: Joi.string(),
                 product_price: Joi.number().integer(),
-                product_gst: Joi.number().integer()
+                product_gst: Joi.number()
             }
         }
     }
