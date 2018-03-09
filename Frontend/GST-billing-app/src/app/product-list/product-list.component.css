@@ -20,3 +20,7 @@
 .ui-datatable-data-empty .ui-dt-c {
     width: 100% !important;
   }    
+
+  input[type=number] {
+    -moz-appearance: textfield;
+  }

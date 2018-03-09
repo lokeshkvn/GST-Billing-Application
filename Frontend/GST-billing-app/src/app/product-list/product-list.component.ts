@@ -17,6 +17,10 @@ export class ProductListComponent implements OnInit {
   product: Product;
   display: boolean;
   product_added;
+  total_price = 0;
+  total_gst = 0;
+  total = 0;
+  total_quantity= 0;
   billList = [];
   editedProduct;
   @Output() displayNotify = new EventEmitter<boolean>()
@@ -90,23 +94,27 @@ export class ProductListComponent implements OnInit {
     console.log(this.productsList,this.productsListForBilling,"before");
     this.productsListForBilling = this.productsListForBilling.filter(item => item.product_code !== product_added.product_code);
     this.product_added = product_added;
-    this.product_added.quantity = 1;
+    this.product_added.quantity = Number(1);
     this.billList.push(product_added);
+    this.calculateTotal();
     console.log(this.billList,this.productsList,this.productsListForBilling);
   }
 
-  search(value){
-    console.log(value,"value")
-    if(value == null || value == '' || value == '^\s+$'){
-      this.getAllProducts()
-      console.log("all products")
-    }
-    else{
-      console.log(value,this.productsListForBilling);
-      this.productsListForBilling = this.productsListForBilling.filter(item => item.product_code == value);
-      console.log(this.productsListForBilling);
-    }
-   
-
+  editQuantity(p){
+    console.log(p,"quantity",p.quantity);
+    this.calculateTotal();
   }
+  calculateTotal(){
+    this.total_gst = 0;
+    this.total_price =0;
+    this.total = 0;
+    this.total_quantity = 0
+    for(let product_added of this.billList){
+    this.total_gst += product_added.product_price*Number(product_added.quantity)*product_added.product_gst/100;
+    this.total_price += product_added.product_price*Number(product_added.quantity);
+    this.total_quantity += Number(product_added.quantity);
+    this.total += product_added.product_price*Number(product_added.quantity)*product_added.product_gst/100 + product_added.product_price*Number(product_added.quantity) 
+  }
+}
+
 }

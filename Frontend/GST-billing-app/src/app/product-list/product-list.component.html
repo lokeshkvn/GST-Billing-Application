@@ -31,16 +31,18 @@
   </p-tabPanel>
   <p-tabPanel header="&nbsp; Billing &nbsp;&nbsp; &nbsp;&nbsp;" leftIcon="fa-print">
 
-    <p-dataScroller [value]="productsListForBilling" [rows]="10" [inline]="true" styleClass="ui-grid-col-3" scrollHeight="500px">
 
+    <p-dataView #dv [value]="productsListForBilling" filterBy="product_name,product_code" [paginator]="true" [rows]="10" styleClass="ui-grid-col-3"
+      [sortField]="sortField" [sortOrder]="sortOrder">
       <p-header>
         <div class="ui-helper-clearfix">
           <div class="ui-g">
-            <div class="ui-g-6 ui-md-4 filter-container">
+            <div class="ui-g-6 ui-md-12 filter-container">
               <div style="position:relative">
-                <input type="search" pInputText placeholder="Search by product code, name" (keyup)="search($event.target.value)">
+                <input type="search" pInputText placeholder="Search by name or code" (keyup)="dv.filter($event.target.value)">
               </div>
             </div>
+
           </div>
         </div>
       </p-header>
@@ -51,8 +53,7 @@
             <b>{{productsk.product_name}}</b>
             <br /> Code :
             <b>{{productsk.product_code}}</b>
-            <br />
-            Price :
+            <br /> Price :
             <b>{{productsk.product_price}} ₹</b>
             <br />GST(%) :
             <b>{{productsk.product_gst}} %</b>
@@ -62,8 +63,8 @@
           </div>
         </div>
       </ng-template>
-    </p-dataScroller>
-   
+    </p-dataView>
+
     <p-table [value]="billList" styleClass="ui-grid-col-9">
       <ng-template pTemplate="caption">
         <div style="padding:20px"> Billing of Products
@@ -73,7 +74,7 @@
         <tr>
           <th id='header'>Product Code</th>
           <th id='header'>Product Name</th>
-          <th id='header'>Product Price</th>
+          <th id='header'>Product Price (₹)</th>
           <th id='header'>Product GST(%)</th>
           <th id='header'>Quantity</th>
           <th id='header'>Total</th>
@@ -83,58 +84,66 @@
         <tr>
           <td id='product'>{{productAdded.product_code}}</td>
           <td id='product'>{{productAdded.product_name}}</td>
-          <td id='product'>{{productAdded.product_price}}</td>
+          <td id='product'>{{productAdded.product_price | number}}</td>
           <td id='product'>{{productAdded.product_gst}}</td>
           <td id='product' pEditableColumn>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input type="text" [(ngModel)]="productAdded.quantity">
+                <input (keyup)="editQuantity(productAdded)" style=" -moz-appearance: textfield;" type="number" [(ngModel)]="productAdded.quantity">
               </ng-template>
               <ng-template pTemplate="output">
                 <div>{{productAdded.quantity}}</div>
               </ng-template>
             </p-cellEditor>
           </td>
-          <td id='product'>{{(productAdded.product_price*productAdded.quantity*productAdded.product_gst/100) + (productAdded.product_price*productAdded.quantity)}}</td>
+          <td id='product'>{{(productAdded.product_price*productAdded.quantity*productAdded.product_gst/100) + (productAdded.product_price*productAdded.quantity) | number}}</td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="emptymessage" let-columns >
-          
-          <tr>
-              <td id='header'>
-                  ...
-              </td>
-              <td id='header'>
-                  ...
-              </td>
+      <ng-template pTemplate="emptymessage" let-columns>
 
-              <td id='header'>
-                  Add Product Here.
-              </td>
-              <td id='header'>
-                  No Products Added
-              </td>
-              <td id='header'>
-                  ...
-              </td>
-              <td id='header'>
-                 ...
-              </td>
-          </tr>
-          
+        <tr>
+          <td id='header'>
+            ...
+          </td>
+          <td id='header'>
+            ...
+          </td>
+
+          <td id='header'>
+            Add Product Here.
+          </td>
+          <td id='header'>
+            No Products Added
+          </td>
+          <td id='header'>
+            ...
+          </td>
+          <td id='header'>
+            ...
+          </td>
+        </tr>
+
       </ng-template>
       <ng-template pTemplate="footer">
-          <tr>
-              <th id='header'></th>
-              <th id='header'> </th>
-            <th id='header'>Total Product Price:</th>
-            <th id='header'> Total Product GST(%):</th>
-            <th id='header'>Quantity: </th>
-            <th id='header'>Total: </th>
-          </tr>
-        </ng-template>
+        <tr>
+          <th id='header'></th>
+          <th id='header'> </th>
+          <th id='header'>Total Product Price:
+            <b>{{total_price | number}} ₹</b>
+          </th>
+          <th id='header'> Total Product GST :
+            <b>{{total_gst | number }} ₹ </b>
+          </th>
+          <th id='header'>Quantity:
+            <b>{{total_quantity}}</b>
+          </th>
+          <th id='header'>Total:
+            <b>{{total |number}} ₹</b>
+          </th>
+        </tr>
+      </ng-template>
     </p-table>
-    
+
   </p-tabPanel>
 </p-tabView>
 
