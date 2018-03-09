@@ -5,7 +5,7 @@ CREATE TABLE `products` (
  `product_code` int(11) NOT NULL,
  `product_name` varchar(1000) NOT NULL,
  `product_price` int(11) NOT NULL,
- `product_gst` int(11) NOT NULL,
+ `product_gst` float NOT NULL,
  PRIMARY KEY (`id`)
 ) 
 

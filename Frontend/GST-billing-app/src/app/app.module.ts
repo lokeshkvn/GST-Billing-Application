@@ -9,7 +9,6 @@ import { DataViewModule } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms'
 import { TabViewModule } from 'primeng/tabview';
@@ -21,7 +20,6 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductDetailComponent,
   ],
   imports: [
     BrowserModule,
