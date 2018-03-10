@@ -73,6 +73,9 @@
     <p-table [value]="billList" styleClass="ui-grid-col-9">
       <ng-template pTemplate="caption">
         <div style="padding:20px"> Billing of Products
+          <!-- Empty Billing list button -->
+            <button style="float:right;margin-left: auto;margin-right: auto;" (click)="emptyBillingList()" label="Empty Billing List"
+            type="button" class="ui-button-danger" pButton icon="fa-times-circle"></button>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
@@ -83,6 +86,7 @@
           <th class="gray" id='header'>Product GST(%)</th>
           <th class="gray" id='header'>Quantity</th>
           <th class="gray" id='header'>Total</th>
+          <th class="gray" id="header">Delete</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-productAdded>
@@ -99,19 +103,25 @@
               </ng-template>
               <ng-template pTemplate="output">
                 <div>{{productAdded.quantity}}
-                    <span style="text-align:right;color:rgb(209, 85, 3); ">
-                        <i class="fa fa-edit"></i>
-                      </span>
+                  <span style="text-align:right;color:rgb(0, 144, 201); ">
+                    <i class="fa fa-edit"></i>
+                  </span>
                 </div>
               </ng-template>
             </p-cellEditor>
           </td>
           <td id='product'>{{(productAdded.product_price*productAdded.quantity*productAdded.product_gst/100) + (productAdded.product_price*productAdded.quantity)
             | number}}</td>
+          <td id='product'>
+            <button type="button" class="ui-button-danger" pButton icon="fa-trash" iconPos="left" style="float:center" (click)="deleteSelectedProduct(productAdded)"></button>
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage" let-columns>
         <tr>
+          <td class="red" id='header'>
+            No Products Added.
+          </td>
           <td class="red" id='header'>
             No Products Added.
           </td>
@@ -147,7 +157,7 @@
             <b>{{total_gst | number }} ₹ </b>
           </th>
           <th id='header'>
-            <span class="gray">Quantity :</span>
+            <span class="gray">Total Quantity :</span>
             <br/>
             <b>{{total_quantity}}</b>
           </th>

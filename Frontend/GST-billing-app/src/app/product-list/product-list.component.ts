@@ -116,4 +116,16 @@ export class ProductListComponent implements OnInit {
 
   }
 
+  // Delete the selected product from the billing list
+  deleteSelectedProduct(product_delete: Product) {
+    this.productsListForBilling.push(product_delete);
+    this.billList = this.billList.filter(item => item.product_code !== product_delete.product_code);
+    this.calculateTotal();
+  }
+
+  //Clear all the products from the Billing List
+  emptyBillingList(){
+    this.billList = [];
+    this.calculateTotal();
+  }
 }
