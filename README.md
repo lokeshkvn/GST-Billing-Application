@@ -43,18 +43,19 @@ To get the frontend running locally:
 The local web server uses port 4200.
 
 
-## UI Views
+## UI 
 
-![alt tag]()
+![alt tag](https://github.com/lokeshkvn/ps-drive-2018-gst-app/blob/master/App%20Screenshots/Products%20List.png?raw=true)
 
-![alt tag]()
+![alt tag](https://github.com/lokeshkvn/ps-drive-2018-gst-app/blob/master/App%20Screenshots/Products%20List%202.png?raw=true)
 
-![alt tag]()
+![alt tag](https://github.com/lokeshkvn/ps-drive-2018-gst-app/blob/master/App%20Screenshots/Add%20product.png?raw=true)
 
-![alt tag]()
+![alt tag](https://github.com/lokeshkvn/ps-drive-2018-gst-app/blob/master/App%20Screenshots/Add%20product%20Validations.png?raw=true)
 
-![alt tag]()
+![alt tag](https://github.com/lokeshkvn/ps-drive-2018-gst-app/blob/master/App%20Screenshots/Empty%20bill%20list.png?raw=true)
 
-![alt tag]() 
+![alt tag](https://github.com/lokeshkvn/ps-drive-2018-gst-app/blob/master/App%20Screenshots/BillList%20Product%20Added.png?raw=true) 
+
 
  © [Lokesh Nandanwar](https://github.com/lokeshkvn)
