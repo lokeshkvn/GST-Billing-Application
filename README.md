@@ -42,4 +42,19 @@ To get the frontend running locally:
 - `ng serve` to start the (http://localhost:4200) with watch and hot reload 
 The local web server uses port 4200.
 
+
+## UI Views
+
+![alt tag]()
+
+![alt tag]()
+
+![alt tag]()
+
+![alt tag]()
+
+![alt tag]()
+
+![alt tag]() 
+
  © [Lokesh Nandanwar](https://github.com/lokeshkvn)
