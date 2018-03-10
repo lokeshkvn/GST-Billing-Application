@@ -1,3 +1,4 @@
+// Product Model class
 export class Product {
     id:number;
     product_code:number;

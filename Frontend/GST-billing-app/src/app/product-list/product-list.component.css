@@ -30,3 +30,16 @@ h2{
     padding-top: 20px;
     padding-bottom:20px; 
 }
+
+.gray{
+    color: #696969;
+}
+
+.blue{
+    color:rgb(3, 151, 209); 
+    font-size:20px;
+}
+
+.red{
+    color:rgb(221, 83, 83); 
+}

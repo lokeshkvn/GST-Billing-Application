@@ -1,234 +1,252 @@
-<div style="background-color:bisque">
-  <p-tabView>
-    <p-tabPanel header=" &nbsp; Home &nbsp;&nbsp; &nbsp;&nbsp;" leftIcon="fa-home">
-      <p-table [value]="productsList" [paginator]="true" [rows]="10" pageLinkSize="3">
-        <ng-template pTemplate="caption">
-          <div style="padding:20px">List of Products
-            <button style="float:right;margin-left: auto;margin-right: auto;" (click)="addNewProduct();;display=true" label="Add Product"
-              type="button" pButton icon="fa-plus"></button>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th id='header'>Product Code</th>
-            <th id='header'>Product Name</th>
-            <th id='header'>Product Price</th>
-            <th id='header'>Product GST(%)</th>
-            <th id='header'>Edit</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-          <tr>
-            <td id='product'>{{product.product_code}}</td>
-            <td id='product'>{{product.product_name}}</td>
-            <td id='product'>{{product.product_price}}</td>
-            <td id='product'>{{product.product_gst}}</td>
-            <td id='product'>
-              <button type="button" pButton icon="fa-edit" iconPos="left" style="float:center" (click)="selectedProduct(product);display=true"></button>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-tabPanel>
-    <p-tabPanel header="&nbsp; Billing &nbsp;&nbsp; &nbsp;&nbsp;" leftIcon="fa-print">
-
-
-      <p-dataView #dv [value]="productsListForBilling" filterBy="product_name,product_code" [paginator]="true" [rows]="10" styleClass="ui-grid-col-3"
-        [sortField]="sortField" [sortOrder]="sortOrder">
-        <p-header>
-          <div class="ui-helper-clearfix">
-            <div class="ui-g">
-              <div class="ui-g-6 ui-md-12 filter-container">
-                <div style="position:relative">
-                  <input type="search" pInputText placeholder="Search by name or code" (keyup)="dv.filter($event.target.value)">
-                </div>
+<!-- tabview to view the tab panel for switching between home page (Products list) and the Billing page. -->
+<p-tabView>
+  <!-- Tab panel content for the Products list page -->
+  <p-tabPanel header=" &nbsp; Home &nbsp;&nbsp; &nbsp;&nbsp;" leftIcon="fa-home">
+    <!-- Table for showing all the products present in the database -->
+    <p-table [value]="productsList" [paginator]="true" [rows]="10" pageLinkSize="3">
+      <ng-template pTemplate="caption">
+        <div style="padding:20px">List of Products
+          <!-- Add new product button -->
+          <button style="float:right;margin-left: auto;margin-right: auto;" (click)="addNewProduct();;display=true" label="Add Product"
+            type="button" pButton icon="fa-plus"></button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th id='header'>Product Code</th>
+          <th id='header'>Product Name</th>
+          <th id='header'>Product Price</th>
+          <th id='header'>Product GST(%)</th>
+          <th id='header'>Edit</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product>
+        <tr>
+          <td id='product'>{{product.product_code}}</td>
+          <td id='product'>{{product.product_name}}</td>
+          <td id='product'>{{product.product_price}}</td>
+          <td id='product'>{{product.product_gst}}</td>
+          <td id='product'>
+            <button type="button" pButton icon="fa-edit" iconPos="left" style="float:center" (click)="selectedProduct(product);display=true"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+  <!-- Tab panel content for the Billing page -->
+  <p-tabPanel header="&nbsp; Billing &nbsp;&nbsp; &nbsp;&nbsp;" leftIcon="fa-print">
+    <p-dataView #dv [value]="productsListForBilling" filterBy="product_name,product_code" [paginator]="true" [rows]="5" styleClass="ui-grid-col-3">
+      <p-header>
+        <div class="ui-helper-clearfix">
+          <div class="ui-g">
+            <div class="ui-g-6 ui-md-12 filter-container">
+              <div style="position:relative">
+                <!-- Search Bar to add search the product -->
+                <input type="search" pInputText placeholder="Search by name or code" (keyup)="dv.filter($event.target.value)">
               </div>
-
-            </div>
-          </div>
-        </p-header>
-        <ng-template let-productsk pTemplate="listItem">
-          <div class="ui-g" style="padding: 1em;border-bottom: 1px solid #d9d9d9;text-align:center">
-            <div class="ui-g-12 ui-md-8">
-
-              <b>{{productsk.product_name}}</b>
-              <br /> Code :
-              <b>{{productsk.product_code}}</b>
-              <br /> Price :
-              <b>{{productsk.product_price}} ₹</b>
-              <br />GST(%) :
-              <b>{{productsk.product_gst}} %</b>
-            </div>
-            <div class="ui-g-12 ui-md-4" style="text-align:center">
-              <button pButton type="button" label="Add" icon="fa-plus" (click)="selectProductforBill(productsk)"></button>
-            </div>
-          </div>
-        </ng-template>
-      </p-dataView>
-
-      <p-table [value]="billList" styleClass="ui-grid-col-9">
-        <ng-template pTemplate="caption">
-          <div style="padding:20px"> Billing of Products
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th id='header'>Product Code</th>
-            <th id='header'>Product Name</th>
-            <th id='header'>Product Price (₹)</th>
-            <th id='header'>Product GST(%)</th>
-            <th id='header'>Quantity</th>
-            <th id='header'>Total</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-productAdded>
-          <tr>
-            <td id='product'>{{productAdded.product_code}}</td>
-            <td id='product'>{{productAdded.product_name}}</td>
-            <td id='product'>{{productAdded.product_price | number}}</td>
-            <td id='product'>{{productAdded.product_gst}}</td>
-            <td id='product' pEditableColumn>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input (keyup)="editQuantity(productAdded)" style=" -moz-appearance: textfield;" type="number" [(ngModel)]="productAdded.quantity">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  <div>{{productAdded.quantity}}</div>
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td id='product'>{{(productAdded.product_price*productAdded.quantity*productAdded.product_gst/100) + (productAdded.product_price*productAdded.quantity)
-              | number}}</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage" let-columns>
-
-          <tr>
-            <td id='header'>
-              ...
-            </td>
-            <td id='header'>
-              ...
-            </td>
-
-            <td id='header'>
-              Add Product Here.
-            </td>
-            <td id='header'>
-              No Products Added
-            </td>
-            <td id='header'>
-              ...
-            </td>
-            <td id='header'>
-              ...
-            </td>
-          </tr>
-
-        </ng-template>
-        <ng-template pTemplate="footer">
-          <tr>
-            <th id='header'></th>
-            <th id='header'> </th>
-            <th id='header'>Total Product Price:
-              <b>{{total_price | number}} ₹</b>
-            </th>
-            <th id='header'> Total Product GST :
-              <b>{{total_gst | number }} ₹ </b>
-            </th>
-            <th id='header'>Quantity:
-              <b>{{total_quantity}}</b>
-            </th>
-            <th id='header'>Total:
-              <b>{{total |number}} ₹</b>
-            </th>
-          </tr>
-        </ng-template>
-      </p-table>
-
-    </p-tabPanel>
-  </p-tabView>
-
-  <div *ngIf="product">
-    <p-dialog header="Product Detail" [(visible)]="display" modal="modal" width="350" [responsive]="true">
-      <form>
-        <div class="form-group" style="padding-bottom:20px;padding-top:20px">
-          <div class="ui-inputgroup">
-            <span class="ui-float-label">
-              <input id="product-code" type="number" pInputText style="width:250px" [(ngModel)]="product.product_code" name="code" required
-                #code="ngModel">
-              <label for="product-code">Product Code</label>
-            </span>
-            <span class="ui-inputgroup-addon">
-              <i class="fa fa-list-ol"></i>
-            </span>
-          </div>
-          <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert alert-danger">
-            <div *ngIf="code.errors.required">
-              Code is required and must be integer.
             </div>
           </div>
         </div>
-        <div class="form-group" style="padding-bottom:20px;padding-top:20px">
-          <div class="ui-inputgroup">
-            <span class="ui-float-label">
-              <input id="product-name" type="text" size="30" style="width:250px" pInputText [(ngModel)]="product.product_name" name="name"
-                required #name="ngModel">
-              <label for="product-name">Product Name</label>
-            </span>
-            <span class="ui-inputgroup-addon">
-              <i class="fa fa-cubes"></i>
-            </span>
+      </p-header>
+      <ng-template let-productsk pTemplate="listItem">
+        <div class="ui-g" style="padding: 1em;border-bottom: 1px solid #d9d9d9;text-align:center">
+          <div class="ui-g-12 ui-md-8">
+            <b class="blue">{{productsk.product_name}}</b>
+            <br />
+            <span class="gray"> Code :</span>
+            <b>{{productsk.product_code}}</b>
+            <br />
+            <span class="gray">Price :</span>
+            <b>{{productsk.product_price}} ₹</b>
+            <br />
+            <span class="gray">GST(%) :</span>
+            <b>{{productsk.product_gst}} %</b>
           </div>
-          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-            <div *ngIf="name.errors.required">
-              Name is required.
-            </div>
-          </div>
-        </div>
-        <div class="form-group" style="padding-bottom:20px;padding-top:20px">
-          <div class="ui-inputgroup">
-            <span class="ui-float-label">
-              <input id="product-price" type="number" pInputText style="width:250px" [(ngModel)]="product.product_price" name="price" required
-                #price="ngModel">
-              <label for="product-price">Product Price</label>
-            </span>
-            <span class="ui-inputgroup-addon">
-              <i class="fa fa-dollar"></i>
-            </span>
-          </div>
-          <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger">
-            <div *ngIf="price.errors.required">
-              Price is required.
-            </div>
+          <div class="ui-g-12 ui-md-4" style="text-align:center">
+            <!-- Select Product to add to the billing list -->
+            <button pButton type="button" label="Add" icon="fa-plus" (click)="selectProductforBill(productsk)"></button>
           </div>
         </div>
-        <div class="form-group" style="padding-bottom:20px;padding-top:20px">
-          <div class="ui-inputgroup">
-            <span class="ui-float-label">
-              <input id="product-gst" type="number" pInputText max="100" min="0" style="width:250px" [(ngModel)]="product.product_gst"
-                name="gst" required #gst="ngModel">
-              <label for="product-gst">Product GST</label>
-            </span>
-            <span class="ui-inputgroup-addon">
-              <i class="fa fa-fax"></i>
-            </span>
-          </div>
-          <div *ngIf="gst.invalid && (gst.dirty || gst.touched)" class="alert alert-danger">
-            <div *ngIf="gst.errors.required">
-              GST on product is required.
-            </div>
-          </div>
-          <div *ngIf="product.product_gst < 0 || product.product_gst > 100 ">
-            GST(%) must be between 0 to 100.
+      </ng-template>
+    </p-dataView>
+    <!-- Billing list Table -->
+    <p-table [value]="billList" styleClass="ui-grid-col-9">
+      <ng-template pTemplate="caption">
+        <div style="padding:20px"> Billing of Products
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="gray" id='header'>Product Code</th>
+          <th class="gray" id='header'>Product Name</th>
+          <th class="gray" id='header'>Product Price (₹)</th>
+          <th class="gray" id='header'>Product GST(%)</th>
+          <th class="gray" id='header'>Quantity</th>
+          <th class="gray" id='header'>Total</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-productAdded>
+        <tr>
+          <td id='product'>{{productAdded.product_code}}</td>
+          <td id='product'>{{productAdded.product_name}}</td>
+          <td id='product'>{{productAdded.product_price | number}}</td>
+          <td id='product'>{{productAdded.product_gst}}</td>
+          <td id='product' pEditableColumn>
+            <!-- Editable column for the product quantity -->
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input (keyup)="editQuantity(productAdded)" style=" -moz-appearance: textfield;" type="number" [(ngModel)]="productAdded.quantity">
+              </ng-template>
+              <ng-template pTemplate="output">
+                <div>{{productAdded.quantity}}
+                    <span style="text-align:right;color:rgb(209, 85, 3); ">
+                        <i class="fa fa-edit"></i>
+                      </span>
+                </div>
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td id='product'>{{(productAdded.product_price*productAdded.quantity*productAdded.product_gst/100) + (productAdded.product_price*productAdded.quantity)
+            | number}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td class="red" id='header'>
+            No Products Added.
+          </td>
+          <td class="red" id='header'>
+            No Products Added.
+          </td>
+          <td class="red" id='header'>
+            No Products Added.
+          </td>
+          <td class="red" id='header'>
+            No Products Added.
+          </td>
+          <td class="red" id='header'>
+            No Products Added.
+          </td>
+          <td class="red" id='header'>
+            No Products Added.
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <th id='header'></th>
+          <th id='header'> </th>
+          <th id='header'>
+            <span class="gray">Product Price :</span>
+            <br/>
+            <b>{{total_price | number}} ₹</b>
+          </th>
+          <th id='header'>
+            <span class="gray">Total Product GST:</span>
+            <br/>
+            <b>{{total_gst | number }} ₹ </b>
+          </th>
+          <th id='header'>
+            <span class="gray">Quantity :</span>
+            <br/>
+            <b>{{total_quantity}}</b>
+          </th>
+          <th id='header'>
+            <span class="gray"> Total :</span>
+            <br/>
+            <b>{{total |number}} ₹</b>
+          </th>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+</p-tabView>
+
+<!-- Dialog Modal for Adding New Product or Editing product to the database -->
+<div *ngIf="product">
+  <p-dialog header="Product Detail" [(visible)]="display" modal="modal" width="350" [responsive]="true">
+    <form>
+      <div class="form-group" style="padding-bottom:20px;padding-top:20px">
+        <div class="ui-inputgroup">
+          <span class="ui-float-label">
+            <input id="product-code" type="number" pInputText style="width:250px" [(ngModel)]="product.product_code" name="code" required
+              #code="ngModel">
+            <label for="product-code">Product Code</label>
+          </span>
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-list-ol"></i>
+          </span>
+        </div>
+        <!-- Validations for Product Code -->
+        <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert alert-danger">
+          <div class="red" *ngIf="code.errors.required">
+            Code is required and must be integer.
           </div>
         </div>
-      </form>
-      <p-footer>
-        <button type="button" pButton icon="fa-check" [disabled]="!product.product_code || !product.product_gst || !product.product_name|| !product.product_price || product.product_gst <0 ||product.product_gst >100"
-          (click)="editProduct()" label="Save" class="ui-button-success"></button>
-        <button type="button" pButton icon="fa-close" (click)="display=false" label="Cancel" class="ui-button-danger"></button>
-      </p-footer>
-    </p-dialog>
-  </div>
+      </div>
+      <div class="form-group" style="padding-bottom:20px;padding-top:20px">
+        <div class="ui-inputgroup">
+          <span class="ui-float-label">
+            <input id="product-name" type="text" size="30" style="width:250px" pInputText [(ngModel)]="product.product_name" name="name"
+              required #name="ngModel">
+            <label for="product-name">Product Name</label>
+          </span>
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-cubes"></i>
+          </span>
+        </div>
+        <!-- Validations for Product Name -->
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+          <div class="red" *ngIf="name.errors.required">
+            Name is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group" style="padding-bottom:20px;padding-top:20px">
+        <div class="ui-inputgroup">
+          <span class="ui-float-label">
+            <input id="product-price" type="number" pInputText style="width:250px" [(ngModel)]="product.product_price" name="price" required
+              #price="ngModel">
+            <label for="product-price">Product Price</label>
+          </span>
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-dollar"></i>
+          </span>
+        </div>
+        <!-- Validations for Product Price -->
+        <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger">
+          <div class="red" *ngIf="price.errors.required">
+            Price is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group" style="padding-bottom:20px;padding-top:20px">
+        <div class="ui-inputgroup">
+          <span class="ui-float-label">
+            <input id="product-gst" type="number" pInputText max="100" min="0" style="width:250px" [(ngModel)]="product.product_gst"
+              name="gst" required #gst="ngModel">
+            <label for="product-gst">Product GST</label>
+          </span>
+          <span class="ui-inputgroup-addon">
+            <i class="fa fa-fax"></i>
+          </span>
+        </div>
+        <!-- Validations for Product GST -->
+        <div *ngIf="gst.invalid && (gst.dirty || gst.touched)" class="alert alert-danger">
+          <div class="red" *ngIf="gst.errors.required">
+            GST on product is required.
+          </div>
+        </div>
+        <div class="red" *ngIf="product.product_gst < 0 || product.product_gst > 100 ">
+          GST(%) must be between 0 to 100.
+        </div>
+      </div>
+    </form>
+    <p-footer>
+      <!-- Save Button will be disabled till all the fields are validated -->
+      <button type="button" pButton icon="fa-check" [disabled]="!product.product_code || !product.product_gst || !product.product_name|| !product.product_price || product.product_gst <0 ||product.product_gst >100"
+        (click)="editProduct()" label="Save" class="ui-button-success"></button>
+      <button type="button" pButton icon="fa-close" (click)="display=false" label="Cancel" class="ui-button-danger"></button>
+    </p-footer>
+  </p-dialog>
 </div>
