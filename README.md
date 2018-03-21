@@ -9,6 +9,9 @@ This is fully fledged fullstack application built with CRUD operations in SQL da
 
 - [How it works](#how-it-works)
 - [Getting Started](#getting-started)
+- [Database](#database)
+- [Backend](#backend)
+- [Frontend](#frontend)
 - [UI](#ui)
 
 ## How it works
