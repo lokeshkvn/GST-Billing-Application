@@ -5,7 +5,11 @@
 
 This is fully fledged fullstack application built with CRUD operations in SQL database, Hapi.js Server and Angular 5 with primeng front end.
 
+## Table of Contents
 
+- [How it works](#how-it-works)
+- [Getting Started](#getting-started)
+- [UI](#ui)
 
 ## How it works
 
