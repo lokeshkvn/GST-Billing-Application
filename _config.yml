@@ -1,3 +1,4 @@
 theme: jekyll-theme-slate
 github:
   is_project_page: false
+  repository_url: https://lokeshnandanwar.wordpress.com
